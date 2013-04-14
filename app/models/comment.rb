@@ -16,4 +16,5 @@ class Comment < ActiveRecord::Base
   attr_accessible :post_id, :text, :user_id, :votes_down, :votes_up
 
   belongs_to :post, :counter_cache => true
+  belongs_to :user, :counter_cache => true
 end
