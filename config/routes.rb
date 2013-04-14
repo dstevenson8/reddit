@@ -4,6 +4,7 @@ Reddit::Application.routes.draw do
   root :to => 'posts#main'
 
   match 'submit/' => 'posts#new', :as => :new_post_path
+  match 'submit/' => 'posts#new', :as => :new_link_path
   match 'create/' => 'posts#create'
   match 'r/:board' => 'posts#board'
 
