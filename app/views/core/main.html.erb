@@ -1,0 +1,36 @@
+
+<div id="feed">
+
+	<% @posts.each do |post| %>
+
+		<div class="post">
+			<div class="position">1</div>
+			<div class="rating">
+				<span class="arrow">&uarr;</span><br>
+				<%= post.votes_up - post.votes_down %><br>
+				<span class="arrow">&darr;</span>
+			</div>
+			<div class="content">
+				<a href="#a"><%= post.title %><br></a>
+				<div class="info">
+					submitted <%= time_ago_in_words(post.created_at) %> ago by <a href="#">user</a> to <a href="#">videos</a><br>
+					<a href="#"><%= pluralize post.comments.size, 'comment' %></a> &nbsp; <a href="#">share</a> &nbsp; <a href="#">save</a> &nbsp; <a href="#">report</a>
+				</div>
+			</div>
+		</div>
+		<div class="clear">
+
+	<% end %>
+</div>
+
+<div id="sidebar">
+	<div class="action">
+		<a href="#">Submit a new link</a>
+	</div>
+	<div class="action">
+		<a href="#">Submit a new new text post</a>
+	</div>
+	<div class="action">
+		<a href="#">Create your own subreddit</a>
+	</div>
+</div>
