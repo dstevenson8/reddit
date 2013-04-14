@@ -1,6 +1,12 @@
 Reddit::Application.routes.draw do
   devise_for :users
 
+  root :to => 'posts#main'
+
+  match 'submit/' => 'posts#new', :as => :new_post_path
+  match 'create/' => 'posts#create'
+  match 'r/:board' => 'posts#board'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

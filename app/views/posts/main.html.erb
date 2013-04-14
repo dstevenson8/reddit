@@ -25,10 +25,10 @@
 
 <div id="sidebar">
 	<div class="action">
-		<a href="#">Submit a new link</a>
+		<%= link_to('Submit a new link', :new_post_path) + '#link' %>
 	</div>
 	<div class="action">
-		<a href="#">Submit a new new text post</a>
+		<%= link_to('Submit a new text post', :new_post_path) + '#text' %>
 	</div>
 	<div class="action">
 		<a href="#">Create your own subreddit</a>
