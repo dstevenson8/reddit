@@ -6,9 +6,9 @@
 		<div class="post">
 			<div class="position">1</div>
 			<div class="rating">
-				<span class="arrow">&uarr;</span><br>
+				<%= image_tag "arrow_up_gray.png", alt: 'Vote Up', class: 'upvote' %><br>
 				<%= post.votes_up - post.votes_down %><br>
-				<span class="arrow">&darr;</span>
+				<%= image_tag "arrow_down_gray.png", alt: 'Vote Down', class: 'downvote'  %>
 			</div>
 			<div class="content">
 				<a href="#a"><%= post.title %><br></a>

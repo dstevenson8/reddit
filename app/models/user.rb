@@ -15,6 +15,10 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  username               :string(255)
+#  comments_count         :integer          default(0), not null
+#  votes_up               :integer          default(0), not null
+#  votes_down             :integer          default(0), not null
 #
 
 class User < ActiveRecord::Base

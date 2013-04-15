@@ -8,6 +8,10 @@ Reddit::Application.routes.draw do
   match 'create/' => 'posts#create'
   match 'r/:board' => 'posts#board'
 
+
+  match 'vote/:entity_type/:entity_id/:vote' => 'posts#vote'
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
