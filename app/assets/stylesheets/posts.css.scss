@@ -1,10 +1,6 @@
-// Place all the styles related to the Posts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
 .upvote, .downvote
 {
-	opacity: 0.7;
+	opacity: 0.25;
 
 	&.active, &:hover
 	{
@@ -15,4 +11,47 @@
 	{
 		cursor: pointer
 	}
+}
+
+#posts
+{
+	padding-top: 10px;
+	width: 80%;
+}
+
+.rating
+{
+	float: left;
+	color: #DBCC86;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	width: 60px
+}
+
+.content
+{
+	float: left;
+	color: #382313;
+	font-size: 20px
+}
+
+.arrow img
+{
+}
+
+.clear
+{
+	clear: both;
+}
+
+.info
+{
+	color: #aaa;
+	font-size: 11px;
+}
+
+.info a
+{
+	color: #6F6FFC;
 }

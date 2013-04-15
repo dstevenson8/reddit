@@ -1,10 +1,9 @@
 
-<div id="feed">
+<div id="posts">
 
 	<% @posts.each do |post| %>
 
 		<div class="post">
-			<div class="position">1</div>
 			<div class="rating">
 				<%= image_tag "arrow_up_gray.png", alt: 'Vote Up', class: 'upvote' %><br>
 				<%= post.votes_up - post.votes_down %><br>

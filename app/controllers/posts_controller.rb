@@ -25,21 +25,7 @@ class PostsController < ApplicationController
 	end
 
 	def vote
-
-		# TODO: refactor
-		if params[:vote] == '-1' || params[:vote] == '1'
-			Vote.create(entity_type: params[:entity_type].to_i, entity_id: params[:entity_id].to_i, vote: params[:vote], user_id: 0)
-
-			if params[:entity_type] == '1'
-				post = Post.find(params[:entity_id])
-				if params[:vote] == -1
-					post.votes_down += 1
-				else
-					post.votes_up += 1
-				end
-				post.save
-			end
-
+		if Vote.add_vote(params[:entity_type].to_i, params[:entity_id].to_i, 1, params[:vote].to_i)
 			redirect_to root_path
 		else
 			redirect_to '/fail'
