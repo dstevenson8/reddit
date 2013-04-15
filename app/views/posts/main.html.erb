@@ -5,20 +5,9 @@
 
 		<div class="post">
 			<div class="rating" data-id="<%= post.id %>" data-entity-type="1">
-				<% #TODO: make this DRY %> 
-				<% if post[:voted] == 1 then %>
-					<%= image_tag 'arrow_up_gray.png', alt: 'Vote Up', class: 'upvote active' %><br>
-				<% else %>
-					<%= image_tag 'arrow_up_gray.png', alt: 'Vote Up', class: 'upvote' %><br>
-				<% end %>
-
-				<%= post.votes_up - post.votes_down %><br>
-
-				<% if post[:voted] == -1 then %>
-					<%= image_tag 'arrow_down_gray.png', alt: 'Vote Down', class: 'downvote active' %><br>
-				<% else %>
-					<%= image_tag 'arrow_down_gray.png', alt: 'Vote Down', class: 'downvote' %><br>
-				<% end %>
+				<%= image_tag 'arrow_up_gray.png',   alt: 'Vote Up', class: (post[:voted] == 1 ? 'upvote active' : 'upvote') %><br>
+				<%= vote_count(post) %><br>
+				<%= image_tag 'arrow_down_gray.png', alt: 'Vote Down', class: (post[:voted] == -1 ? 'downvote active' : 'downvote') %>
 			</div>
 			<div class="content">
 				<a href="#a"><%= post.title %><br></a>
