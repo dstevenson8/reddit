@@ -11,6 +11,7 @@
 #  comments_count :integer          default(0)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  subreddit_id   :integer
 #
 
 class Post < ActiveRecord::Base
@@ -18,7 +19,7 @@ class Post < ActiveRecord::Base
 
   validates :title, :length => { :in => 3..255 }
 
-
+  belongs_to :subreddit
   has_many :comments
 
 

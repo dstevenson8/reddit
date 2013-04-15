@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130414235122) do
+ActiveRecord::Schema.define(:version => 20130415101416) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
@@ -32,6 +32,15 @@ ActiveRecord::Schema.define(:version => 20130414235122) do
     t.integer  "comments_count", :default => 0
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
+    t.integer  "subreddit_id"
+  end
+
+  create_table "subreddits", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.text     "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
