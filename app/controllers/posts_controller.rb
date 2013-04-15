@@ -1,14 +1,32 @@
 class PostsController < ApplicationController
 
+
 	def main
-		@posts = Post.find(:all, :limit => 10,
-						   :joins => 'LEFT JOIN `votes` ON `votes`.`entity_type` = 1 AND `votes`.`entity_id` = `posts`.`id`',
-						   :select => '`posts`.*, `votes`.`vote`',
-						   :group => '`posts`.`id`')
+		@posts = Post.limit(10)
+
+
+		if signed_in? 
+			post_ids = []
+			@posts.each do |p|
+				post_ids << p.id
+				p[:voted] = 0
+			end
+			votes = Vote.where('user_id = ? AND entity_id IN (?)', current_user.id, post_ids)
+			
+			votes.each do |v|
+				@posts.each do |p|
+					if v.entity_id == p.id
+						p[:voted] = v.vote
+					end 
+				end
+			end
+		end
+
+
 	end
 
-	def board(board)
-		#@posts = Post.find()
+	def board
+		@posts = Subreddit.find()
 	end
 
 	def new
@@ -25,10 +43,10 @@ class PostsController < ApplicationController
 	end
 
 	def vote
-		if Vote.add_vote(params[:entity_type].to_i, params[:entity_id].to_i, 1, params[:vote].to_i)
-			redirect_to root_path
+		if signed_in? && Vote.add_vote(params[:entity_type].to_i, params[:entity_id].to_i, current_user.id, params[:vote].to_i)
+			render json: { status: :success } 
 		else
-			redirect_to '/fail'
+			render json: { status: :fail } 
 		end
 	end
 end

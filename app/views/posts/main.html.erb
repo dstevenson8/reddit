@@ -4,10 +4,21 @@
 	<% @posts.each do |post| %>
 
 		<div class="post">
-			<div class="rating">
-				<%= image_tag "arrow_up_gray.png", alt: 'Vote Up', class: 'upvote' %><br>
+			<div class="rating" data-id="<%= post.id %>" data-entity-type="1">
+				<% #TODO: make this DRY %> 
+				<% if post[:voted] == 1 then %>
+					<%= image_tag 'arrow_up_gray.png', alt: 'Vote Up', class: 'upvote active' %><br>
+				<% else %>
+					<%= image_tag 'arrow_up_gray.png', alt: 'Vote Up', class: 'upvote' %><br>
+				<% end %>
+
 				<%= post.votes_up - post.votes_down %><br>
-				<%= image_tag "arrow_down_gray.png", alt: 'Vote Down', class: 'downvote'  %>
+
+				<% if post[:voted] == -1 then %>
+					<%= image_tag 'arrow_down_gray.png', alt: 'Vote Down', class: 'downvote active' %><br>
+				<% else %>
+					<%= image_tag 'arrow_down_gray.png', alt: 'Vote Down', class: 'downvote' %><br>
+				<% end %>
 			</div>
 			<div class="content">
 				<a href="#a"><%= post.title %><br></a>
