@@ -26,7 +26,8 @@ class PostsController < ApplicationController
 	end
 
 	def board
-		@posts = Subreddit.find()
+		@posts = Post.where('subreddit_id LIKE ?', params[:board])
+		render json: @posts
 	end
 
 	def new
