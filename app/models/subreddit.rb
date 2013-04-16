@@ -2,7 +2,7 @@
 #
 # Table name: subreddits
 #
-#  id         :integer          not null, primary key
+#  id         :string(16)
 #  title      :string(255)
 #  url        :string(255)
 #  text       :text

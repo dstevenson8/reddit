@@ -12,7 +12,10 @@
 			<div class="content">
 				<a href="#a"><%= post.title %><br></a>
 				<div class="info">
-					submitted <%= time_ago_in_words(post.created_at) %> ago by <a href="#">user</a> to <a href="#">videos</a><br>
+					submitted 
+					<%= time_ago_in_words(post.created_at) %> ago by 
+					<%= link_to post.user.username, 'user/' + post.user.username %> to 
+					<%= link_to_subreddit post.subreddit_id %><br>
 					<a href="#"><%= pluralize post.comments.size, 'comment' %></a> &nbsp; <a href="#">share</a> &nbsp; <a href="#">save</a> &nbsp; <a href="#">report</a>
 				</div>
 			</div>

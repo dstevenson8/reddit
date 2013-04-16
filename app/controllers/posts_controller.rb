@@ -2,8 +2,7 @@ class PostsController < ApplicationController
 
 
 	def main
-		@posts = Post.limit(10).order("id DESC")
-		@posts ||= []
+		@posts = Post.limit(10).order("id DESC") || []
 		
 		if signed_in?
 			Vote.populate_posts(@posts, current_user)
@@ -11,8 +10,7 @@ class PostsController < ApplicationController
 	end
 
 	def board
-		@posts = Post.where('subreddit_id LIKE ?', params[:board]).order("id DESC")
-		@posts ||= []
+		@posts = Post.where('subreddit_id LIKE ?', params[:board]).order("id DESC") || []
 
 		if signed_in?
 			Vote.populate_posts(@posts, current_user)

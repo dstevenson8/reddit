@@ -11,7 +11,7 @@
 #  comments_count :integer          default(0)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  subreddit_id   :integer
+#  subreddit_id   :string(16)
 #
 
 require 'spec_helper'
