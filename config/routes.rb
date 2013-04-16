@@ -8,7 +8,6 @@ Reddit::Application.routes.draw do
   match 'create/' => 'posts#create'
   match 'r/:board' => 'posts#board', :as => :subreddit
 
-
   match 'vote/:entity_type/:entity_id/:vote' => 'posts#vote'
 
 

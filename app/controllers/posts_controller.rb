@@ -1,9 +1,7 @@
 class PostsController < ApplicationController
 
-
-
 	def main
-		@posts = Post.includes(:user).limit(10).order("id DESC") || []
+		@posts = Post.limit(10).order("id DESC").includes(:user) || []
 		
 		if signed_in?
 			Vote.populate_posts(@posts, current_user)
@@ -11,7 +9,7 @@ class PostsController < ApplicationController
 	end
 
 	def board
-		@posts = Post.where('subreddit_id LIKE ?', params[:board]).order("id DESC") || []
+		@posts = Post.where('subreddit_id LIKE ?', params[:board]).order("id DESC").includes(:user) || []
 
 		if signed_in?
 			Vote.populate_posts(@posts, current_user)
@@ -27,7 +25,6 @@ class PostsController < ApplicationController
 
 	def create
 		redirect_to :new_user_session and return unless signed_in?
-
 
 		params[:post][:user_id] = current_user.id;
 		@post = Post.new(params[:post])
@@ -51,6 +48,7 @@ class PostsController < ApplicationController
 		else
 			render json: { status => :fail, :reason => 'You are not signed in' } 
 		end
+
 	end
 
 
