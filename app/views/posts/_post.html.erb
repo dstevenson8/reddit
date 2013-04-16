@@ -1,0 +1,18 @@
+<div class="post">
+	<div class="rating" data-id="<%= post.id %>" data-entity-type="1">
+		<%= image_tag 'arrow_up_gray.png',   alt: 'Vote Up', class: (post[:voted] == 1 ? 'upvote active' : 'upvote') %><br>
+		<span class="count"><%= vote_count(post) %></span><br>
+		<%= image_tag 'arrow_down_gray.png', alt: 'Vote Down', class: (post[:voted] == -1 ? 'downvote active' : 'downvote') %>
+	</div>
+	<div class="content">
+		<a href="#a"><%= post.title %><br></a>
+		<div class="info">
+			submitted 
+			<%= time_ago_in_words(post.created_at) %> ago by 
+			<%= link_to post.user.username, 'user/' + post.user.username %> to 
+			<%= link_to_subreddit post.subreddit_id %><br>
+			<a href="#"><%= pluralize post.comments.size, 'comment' %></a> &nbsp; <a href="#">share</a> &nbsp; <a href="#">save</a> &nbsp; <a href="#">report</a>
+		</div>
+	</div>
+</div>
+<div class="clear">
