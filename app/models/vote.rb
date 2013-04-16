@@ -52,4 +52,26 @@ class Vote < ActiveRecord::Base
     entity.save
   end
 
+  # Checks if the user has voted on the given posts 
+  def self.populate_posts(posts, current_user)
+
+    # Get IDs of posts that should be checked
+    post_ids = []
+    posts.each do |p|
+      post_ids << p.id
+    end
+
+    # Check if there are any votes for the given IDs 
+    votes = Vote.where('user_id = ? AND entity_id IN (?)', current_user.id, post_ids)    
+    votes.each do |v|
+      posts.each do |p|
+        if v.entity_id == p.id
+          p[:voted] = v.vote
+        end 
+      end
+    end
+
+    posts
+  end
+
 end

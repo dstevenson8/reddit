@@ -3,31 +3,21 @@ class PostsController < ApplicationController
 
 	def main
 		@posts = Post.limit(10)
-
-
-		if signed_in? 
-			post_ids = []
-			@posts.each do |p|
-				post_ids << p.id
-				p[:voted] = 0
-			end
-			votes = Vote.where('user_id = ? AND entity_id IN (?)', current_user.id, post_ids)
-			
-			votes.each do |v|
-				@posts.each do |p|
-					if v.entity_id == p.id
-						p[:voted] = v.vote
-					end 
-				end
-			end
+		if signed_in?
+			Vote.populate_posts(@posts, current_user)
 		end
-
-
 	end
 
 	def board
 		@posts = Post.where('subreddit_id LIKE ?', params[:board])
-		render json: @posts
+		
+		if signed_in?
+			Vote.populate_posts(@posts, current_user)
+		end
+
+
+
+		render 'main'
 	end
 
 	def new

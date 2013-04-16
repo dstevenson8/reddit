@@ -19,6 +19,7 @@ jQuery ->
 
 			
 		$.getJSON '/vote/' + entity_type + '/' + id + '/' + vote_type, (response) ->
+			console.log(response)
 			if response.status == 'success'
 				parent.find('img').removeClass('active')
 			

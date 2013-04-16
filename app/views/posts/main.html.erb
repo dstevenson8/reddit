@@ -6,7 +6,7 @@
 		<div class="post">
 			<div class="rating" data-id="<%= post.id %>" data-entity-type="1">
 				<%= image_tag 'arrow_up_gray.png',   alt: 'Vote Up', class: (post[:voted] == 1 ? 'upvote active' : 'upvote') %><br>
-				<%= vote_count(post) %><br>
+				<span class="count"><%= vote_count(post) %></span><br>
 				<%= image_tag 'arrow_down_gray.png', alt: 'Vote Down', class: (post[:voted] == -1 ? 'downvote active' : 'downvote') %>
 			</div>
 			<div class="content">
