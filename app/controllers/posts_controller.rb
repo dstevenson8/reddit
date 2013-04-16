@@ -2,14 +2,14 @@ class PostsController < ApplicationController
 
 
 	def main
-		@posts = Post.limit(10)
+		@posts = Post.limit(10).order("id DESC")
 		if signed_in?
 			Vote.populate_posts(@posts, current_user)
 		end
 	end
 
 	def board
-		@posts = Post.where('subreddit_id LIKE ?', params[:board])
+		@posts = Post.where('subreddit_id LIKE ?', params[:board]).order("id DESC")
 		
 		if signed_in?
 			Vote.populate_posts(@posts, current_user)
