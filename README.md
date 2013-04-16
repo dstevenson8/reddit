@@ -10,6 +10,11 @@ Todo:
 - [RoR] Individual post pages with comments
 - [RoR] Implement ranking algorithms 
 - [RoR] RSpec posting/post view tests
+- [RoR] Ensure all validations are in order
+- [RoR] User settings
+- [CSS] Global form style
+- [UX] Auto upvote upon submitting something
+- [UX] Redirect user to the page they were on (or tried to be on) before logging in
 - [Future Version] Subreddit admins
 - [Future Version] Subreddit customization
 - [Future Version] Ability to ban users, both from a Subreddit level and from the site
