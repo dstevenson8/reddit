@@ -55,6 +55,10 @@ class Vote < ActiveRecord::Base
   # Checks if the user has voted on the given posts 
   def self.populate_posts(posts, current_user)
 
+    if posts.empty? || posts == nil then
+      return []
+    end
+
     # Get IDs of posts that should be checked
     post_ids = []
     posts.each do |p|

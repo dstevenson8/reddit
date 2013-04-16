@@ -3,6 +3,8 @@ class PostsController < ApplicationController
 
 	def main
 		@posts = Post.limit(10).order("id DESC")
+		@posts ||= []
+		
 		if signed_in?
 			Vote.populate_posts(@posts, current_user)
 		end
@@ -10,12 +12,11 @@ class PostsController < ApplicationController
 
 	def board
 		@posts = Post.where('subreddit_id LIKE ?', params[:board]).order("id DESC")
-		
+		@posts ||= []
+
 		if signed_in?
 			Vote.populate_posts(@posts, current_user)
 		end
-
-
 
 		render 'main'
 	end
