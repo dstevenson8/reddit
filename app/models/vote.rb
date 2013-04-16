@@ -14,28 +14,28 @@
 class Vote < ActiveRecord::Base
   attr_accessible :entity_id, :entity_type, :id, :user_id, :vote
 
-
+  # Responsible for adding a user's vote
   def self.add_vote(entity_type, entity_id, user_id, vote_value)
 
     entity = nil
 
-    #Ensure the post that is being voted on exists
+    # Ensure the post that is being voted on exists
     if entity_type == 1
       entity = Post.find(entity_id)
     elsif entity_type == 2
       entity = Comment.find(entity_id)
     end
 
-    #Invalid type or no results
+    # Invalid type or no results
     return false if entity == nil
 
-    #Check if vote_value is valid
+    # Check if vote_value is valid
     return false unless [-1, 0, 1].include? vote_value
 
-    #Check if the user has already voted, and, if they have, update the vote counter accordingly
+    # Check if the user has already voted, and, if they have, update the vote counter accordingly
     # e.g. new vote == -1 and old == 1 
     existing_vote = Vote.where(entity_type: entity_type, entity_id: entity_id, user_id: user_id).first
-    if existing_vote != nil #Remove the old vote from the counter if it exists
+    if existing_vote != nil # Remove the old vote from the counter if it exists
       entity.votes_up   -= 1 if existing_vote.vote ==  1
       entity.votes_down -= 1 if existing_vote.vote == -1
       existing_vote.vote = vote_value
@@ -44,12 +44,12 @@ class Vote < ActiveRecord::Base
       Vote.create(entity_type: entity_type, entity_id: entity_id, user_id: user_id, vote: vote_value)
     end
 
-    #Add new vote values
+    # Add new vote values
     entity.votes_up   += 1 if vote_value ==  1
     entity.votes_down += 1 if vote_value == -1
 
     #Save    
-    entity.save
+    { result: entity.save, votes_up: entity.votes_up, votes_down: entity.votes_down }
   end
 
   # Checks if the user has voted on the given posts 

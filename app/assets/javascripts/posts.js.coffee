@@ -21,7 +21,9 @@ jQuery ->
 		$.getJSON '/vote/' + entity_type + '/' + id + '/' + vote_type, (response) ->
 			console.log(response)
 			if response.status == 'success'
+				parent.find('.count').html(response.new_rank)
 				parent.find('img').removeClass('active')
-			
+				
 				if vote_type != 0 
 					img.addClass('active')
+
