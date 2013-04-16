@@ -2,7 +2,7 @@ class PostsController < ApplicationController
 
 
 	def main
-		@posts = Post.limit(10).order("id DESC") || []
+		@posts = Post.includes(:user).limit(10).order("id DESC") || []
 		
 		if signed_in?
 			Vote.populate_posts(@posts, current_user)
