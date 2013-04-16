@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
 
 
+
 	def main
 		@posts = Post.includes(:user).limit(10).order("id DESC") || []
 		
@@ -20,10 +21,15 @@ class PostsController < ApplicationController
 	end
 
 	def new
+		redirect_to :new_user_session and return unless signed_in?
 		@post = Post.new
 	end
 
 	def create
+		redirect_to :new_user_session and return unless signed_in?
+
+
+		params[:post][:user_id] = current_user.id;
 		@post = Post.new(params[:post])
 		if @post.save
 			redirect_to root_path
@@ -33,13 +39,17 @@ class PostsController < ApplicationController
 	end
 
 	def vote
-		render json: { status => :fail, :reason => 'You are not signed in' } unless signed_in?
 
-		vote = Vote.add_vote(params[:entity_type].to_i, params[:entity_id].to_i, current_user.id, params[:vote].to_i)
-		if vote[:result]
-			render json: { :status => :success, :new_rank => vote_count(vote) } 
+		if signed_in?
+
+			vote = Vote.add_vote(params[:entity_type].to_i, params[:entity_id].to_i, current_user.id, params[:vote].to_i)
+			if vote[:result]
+				render json: { :status => :success, :new_rank => vote_count(vote) } 
+			else
+				render json: { :status => :fail, :reason => 'Failed to add vote' } 
+			end
 		else
-			render json: { :status => :fail, :reason => 'Failed to add vote' } 
+			render json: { status => :fail, :reason => 'You are not signed in' } 
 		end
 	end
 

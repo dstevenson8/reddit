@@ -5,8 +5,12 @@
 
 	<%= form_for @post, :url => { action: 'create' } do |f| %>
 
-		<% @post.errors.full_messages.each do |message| %>
-			<%= "<p>#{message}</p><br>".html_safe %>
+		<% if @post.errors.full_messages.any? %>
+			<div class="error">
+				<% @post.errors.full_messages.each do |message| %>
+					<%= "<p>#{message}</p><br>".html_safe %>
+				<% end %>
+			</div>
 		<% end %>
 
 		<%= f.label :title %><br>
