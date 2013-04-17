@@ -1,22 +1,24 @@
-<div class="comment">
-	<div class="rating" data-id="<%= comment.id %>" data-entity-type="2">
+<div class="comment root" data-id="<%= comment.id %>" data-entity-type="2">
+	<div class="rating">
 		<%= image_tag 'arrow_up_gray.png',   alt: 'Vote Up', class: (comment[:voted] == 1 ? 'upvote active' : 'upvote') %><br>
 		<%= image_tag 'arrow_down_gray.png', alt: 'Vote Down', class: (comment[:voted] == -1 ? 'downvote active' : 'downvote') %>
 	</div>
 
 	<div class="info">
 		<%= link_to comment.user.username, 'user/' + comment.user.username %> 
-		<%= pluralize(point_count(comment), 'point') %>
+		<span class="points_text"><%= pluralize(point_count(comment), 'point') %></span>
 
 		<span title="<%= comment.created_at %>">
 			<%= time_ago_in_words(comment.created_at) %> ago
 		</span>
 
+		<!--
 		<% if comment.created_at != comment.updated_at %>
 			<span title="<%= comment.updated_at %>">
 				, updated <%= time_ago_in_words(comment.updated_at) %>
 			</span>
 		<% end %>
+		-->
 	</div>
 	<%= comment.text %>
 </div>

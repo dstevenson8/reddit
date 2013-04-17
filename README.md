@@ -11,6 +11,7 @@ Todo:
 - [RoR] RSpec posting/post view tests
 - [RoR] Ensure all validations are in order
 - [RoR] User settings
+- [RoR] Voting: user points
 - [CSS] Global form style
 - [UX] Auto upvote upon submitting something
 - [UX] Redirect user to the page they were on (or tried to be on) before logging in

@@ -48,14 +48,18 @@ class Vote < ActiveRecord::Base
     entity.votes_up   += 1 if vote_value ==  1
     entity.votes_down += 1 if vote_value == -1
 
-    #Save    
-    { result: entity.save, votes_up: entity.votes_up, votes_down: entity.votes_down }
+    #Save
+    {
+      result: entity.save,
+      votes_up: entity.votes_up,
+      votes_down: entity.votes_down
+    }
   end
 
   # Checks if the user has voted on the given posts 
-  def self.populate_posts(posts, current_user)
+  def self.update_users_votes(posts, current_user, entity_type)
 
-    if posts.empty? || posts == nil then
+    if posts == nil || posts.empty? then
       return []
     end
 
@@ -66,7 +70,7 @@ class Vote < ActiveRecord::Base
     end
 
     # Check if there are any votes for the given IDs 
-    votes = Vote.where('user_id = ? AND entity_id IN (?)', current_user.id, post_ids)    
+    votes = Vote.where('user_id = ? AND entity_id IN (?) AND entity_type = ?', current_user.id, post_ids, entity_type)    
     votes.each do |v|
       posts.each do |p|
         if v.entity_id == p.id

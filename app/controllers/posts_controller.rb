@@ -1,3 +1,4 @@
+include ActionView::Helpers::TextHelper
 class PostsController < ApplicationController
 
 	# Show all boards
@@ -6,7 +7,7 @@ class PostsController < ApplicationController
 		@posts = Post.limit(10).order("id DESC").includes(:user) || []
 		
 		if signed_in?
-			Vote.populate_posts(@posts, current_user)
+			Vote.update_users_votes(@posts, current_user, 1)
 		end
 	end
 
@@ -16,7 +17,7 @@ class PostsController < ApplicationController
 		@posts = Post.where('subreddit_id LIKE ?', params[:board]).order("id DESC").includes(:user) || []
 
 		if signed_in?
-			Vote.populate_posts(@posts, current_user)
+			Vote.update_users_votes(@posts, current_user, 1)
 		end
 
 		render 'main'
@@ -30,12 +31,17 @@ class PostsController < ApplicationController
 
 		@comments = @post.comments
 
+		if signed_in?
+			Vote.update_users_votes([@post], current_user, 1)
+			Vote.update_users_votes(@comments, current_user, 2)
+		end
+
 		if params[:comment] 
 			params[:comment][:user_id] = current_user.id
 			params[:comment][:post_id] = @post.id
 			@new_comment = Comment.new(params[:comment])
 			if @new_comment.save(params[:comment])
-				redirect_to request.fullpath + '#success'
+				redirect_to request.fullpath
 			else
 				@errors = @new_comment.errors.full_messages
 			end
@@ -70,12 +76,23 @@ class PostsController < ApplicationController
 
 			vote = Vote.add_vote(params[:entity_type].to_i, params[:entity_id].to_i, current_user.id, params[:vote].to_i)
 			if vote[:result]
-				render json: { :status => :success, :new_rank => vote_count(vote) } 
+				points = point_count(vote)
+				render json: {
+					:status => :success,
+					:new_points => points,
+					:new_points_text => pluralize(points, 'point')
+				} 
 			else
-				render json: { :status => :fail, :reason => 'Failed to add vote' } 
+				render json: {
+					:status => :fail,
+					:reason => 'Failed to add vote'
+				} 
 			end
 		else
-			render json: { status => :fail, :reason => 'You are not signed in' } 
+			render json: {
+				status => :fail,
+				:reason => 'You are not signed in'
+			} 
 		end
 	end
 

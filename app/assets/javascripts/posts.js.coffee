@@ -6,8 +6,9 @@ jQuery ->
 	$('.rating img').click ->
 		img = $(this)
 		parent = $(this).closest('.rating')
-		id = parent.data('id')
-		entity_type = parent.data('entity-type')
+		root = $(this).closest('.root')
+		id = root.data('id')
+		entity_type = root.data('entity-type')
 
 		
 		if img.hasClass('active')
@@ -19,9 +20,9 @@ jQuery ->
 
 			
 		$.getJSON '/vote/' + entity_type + '/' + id + '/' + vote_type, (response) ->
-			console.log(response)
 			if response.status == 'success'
-				parent.find('.count').html(response.new_rank)
+				root.find('.points').html(response.new_points)
+				root.find('.points_text').html(response.new_points_text)
 				parent.find('img').removeClass('active')
 				
 				if vote_type != 0 

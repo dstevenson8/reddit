@@ -1,18 +1,20 @@
+<% post_path = '/r/' + post.subreddit_id + '/' + post.id.to_s %>
+
 <br>
-<div class="post">
-	<div class="rating" data-id="<%= post.id %>" data-entity-type="1">
+<div class="post root" data-id="<%= post.id %>" data-entity-type="1">
+	<div class="rating">
 		<%= image_tag 'arrow_up_gray.png',   alt: 'Vote Up', class: (post[:voted] == 1 ? 'upvote active' : 'upvote') %><br>
-		<span class="count"><%= point_count(post) %></span><br>
+		<span class="points"><%= point_count(post) %></span><br>
 		<%= image_tag 'arrow_down_gray.png', alt: 'Vote Down', class: (post[:voted] == -1 ? 'downvote active' : 'downvote') %>
 	</div>
 	<div class="content">
-		<a href="#a"><%= post.title %><br></a>
+		<%= link_to post.title, post_path %><br>
 		<div class="info">
 			submitted 
 			<%= time_ago_in_words(post.created_at) %> ago by 
 			<%= link_to post.user.username, 'user/' + post.user.username %> to 
 			<%= link_to_subreddit post.subreddit_id %><br>
-			<%= link_to pluralize(post.comments.size, 'comment'), '/r/' + post.subreddit_id + '/' + post.id.to_s  %></a> &nbsp; <a href="#">share</a> &nbsp; <a href="#">save</a> &nbsp; <a href="#">report</a>
+			<%= link_to pluralize(post.comments.size, 'comment'), post_path %></a> &nbsp; <a href="#">share</a> &nbsp; <a href="#">save</a> &nbsp; <a href="#">report</a>
 		</div>
 	</div>
 </div>
