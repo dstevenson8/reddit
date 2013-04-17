@@ -102,3 +102,41 @@ $white: #FFF;
 	color: $white;
 	font-size: 24px
 }
+
+
+/* Comments */
+.comment
+{
+	margin: 10px;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	min-height: 70px;
+	font-size: 12px;
+	padding-top: 5px;
+
+	.info
+	{
+		padding-bottom: 3px
+	}
+
+	a
+	{
+		font-weight: bold
+	}
+}
+
+#comment_container
+{
+	padding: 20px;
+
+	input[type="submit"]
+	{
+		padding: 5px;
+	}
+
+	textarea
+	{
+		font-family: Verdana
+	}
+
+}

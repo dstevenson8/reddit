@@ -15,6 +15,10 @@
 class Comment < ActiveRecord::Base
   attr_accessible :post_id, :text, :user_id, :votes_down, :votes_up
 
+  validates :text, :length => { :in => 3..255 }
+  validates :user_id, :presence => true
+  validates :post_id, :presence => true
+
   belongs_to :post, :counter_cache => true
   belongs_to :user, :counter_cache => true
 end

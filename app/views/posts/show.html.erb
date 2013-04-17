@@ -1,0 +1,25 @@
+<%= render :partial => 'post', :locals => { post: @post } %>
+
+
+
+<div id="comment_container">
+	displaying <%= pluralize(@post.comments_count, 'comment') %>
+	<hr>
+	<br>
+
+
+
+	<%= form_for @new_comment, url: request.fullpath do |f| %>
+		<%= f.text_area :text, size: "60x6" %><br>
+		<%= f.submit 'Save' %>
+	<% end %>
+
+	<br>
+
+	<% @comments.each do |comment| %>
+		<%= render :partial => 'comment', :locals => { comment: comment } %>
+	<% end %>
+</div>
+
+
+
